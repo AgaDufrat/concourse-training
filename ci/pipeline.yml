@@ -115,3 +115,4 @@ jobs:
         - put: test-report
           params:
             file: built-binary/yml2env-*
+      attempts: 10
