@@ -73,3 +73,13 @@ Remember to update the pipeline after every change.
 
 The order of jobs doesn't matter.
 The order of tasks in the plan is important.
+
+## Testing Without Committing
+
+We want to find out if this task works without making a commit to version control, and without running the whole pipeline or changing the state of resources. Concourse allows us to do this in the exact same environment as it will run ‘for real’, meaning that we don’t have to try and replicate the tools and configuration of Concourse locally.
+
+Use fly execute to make Concourse run your task in isolation. You will need to provide the local path of the yml2env code repository directory as an input.
+
+```
+fly execute -t training -c lint.yml -i cli-code=.
+```

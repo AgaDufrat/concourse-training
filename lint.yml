@@ -1,0 +1,16 @@
+platform: linux
+inputs:
+- name: cli-code
+#- path: /Users/agadufrat/workspace/concourse-training/yml2env
+# External tasks must specify the basis for their root filesystem - in this case
+# as a Docker image. Elsewhere in the pipeline we’ve been passing an image asset
+# to tasks. However, an external task can be run in isolation (not as part of a
+# pipeline) so it can’t rely on an image being passed to it.
+image_resource:
+  type: docker-image
+  source:
+    repository: training-box-docker-registry:5000/student/golang-image
+    insecure_registries:
+    - "training-box-docker-registry:5000"
+run:
+  path: cli-code/lint.sh

@@ -32,6 +32,15 @@ resources:
   type: email
   source:
     from: ci@example.com
+- name: test-report
+  type: s3
+  source:
+    endpoint: training-box-minio:9000
+    disable_ssl: true
+    bucket: test-reports
+    regexp: junit-(.*).xml
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
 jobs:
   - name: build-image
     plan:
@@ -94,9 +103,15 @@ jobs:
         params:
           FIXTURE_LOCATION: "fixtures/"
           FLAKE: "something"
+        output:
+          name: test-report
       on_failure:
-        put: send-email
-        params:
-          to: [inbox-dd56bbdcf398680346e5a4aac09649@mailsac.com]
-          subject: "Concourse Training"
-          body: "Oh no! Test failed"
+        do:
+        - put: send-email
+          params:
+            to: [inbox-dd56bbdcf398680346e5a4aac09649@mailsac.com]
+            subject: "Concourse Training"
+            body: "Oh no! Test failed"
+        - put: test-report
+          params:
+            file: built-binary/yml2env-*
