@@ -1,49 +1,14 @@
-# yml2env
+# Concourse CI training project
 
-![Build Status](http://ci.engineerbetter.com/api/v1/teams/main/pipelines/yml2env/jobs/test/badge)
+## Pre-requisites
 
-Executes a command with environment variables taken from a YAML file.
+This training project depends on a training environment that is published as a set of Kubernetes resources.
+We need to install:
+- Docker
+- `kind` (Kubernetes-in-Docker) to start a Kubernetes cluster
+- `kubectl` - used to interact with Kubernetes
+- `fly` CLI to log into our Concourse instance
 
-```
-yml2env <path-to-yaml-file> <command>
-```
+## Web UI
 
-## Why?
-
-It's quite handy for using Concourse `--load-vars-from` files when running local tasks, like tests.
-
-## Example
-
-Given a YAML file stored in `ci/vars/local.yml`:
-
-```
----
-cf_username: admin
-cf_password: whevsmate
-```
-
-...running `yml2env ci/vars/local.yml fly execute ci/tasks/system-tests.yml` is equivalent to running
-
-```
-CF_USERNAME=admin CF_PASSWORD=whevsmate fly execute ci/tasks/system-tests.yml
-```
-
-## Installation
-
-### Go developers
-
-```
-go get github.com/EngineerBetter/yml2env
-```
-
-### Everyone else
-
-1. Download [a release](https://github.com/EngineerBetter/yml2env/releases)
-1. Move to `$PATH` and rename to `yml2env`
-1. `chmod +x yml2env`
-
-## Testing
-
-```
-go test ./...
-```
+Visit Concourse in a web browser - http://concourse.127.0.0.1.nip.io
