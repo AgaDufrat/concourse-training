@@ -68,3 +68,8 @@ params:
   FIXTURE_LOCATION: ""
 ```
 Remember to update the pipeline after every change.
+
+## Chaining jobs
+
+The order of jobs doesn't matter.
+The order of tasks in the plan is important.

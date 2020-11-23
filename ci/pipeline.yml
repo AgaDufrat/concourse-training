@@ -36,12 +36,6 @@ jobs:
     - task: go-build
       config:
         platform: linux
-        # Define the Docker image to use as the filesystem for this task
-        image_resource:
-          type: docker-image
-          source:
-            repository: training-box-docker-registry:5000/student/golang-image
-            insecure_registries: [ "training-box-docker-registry:5000" ]
 
         # Tell Concourse which things to mount into the container
         inputs:
@@ -61,6 +55,7 @@ jobs:
         # Mount an output directory called built-binary
         output:
           name: built-binary
+      image: golang-image
     # Upload any file matching built-binary/yml2env-* to S3
     - put: release-candidate
       params:
