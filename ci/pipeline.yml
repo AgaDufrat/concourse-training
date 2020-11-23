@@ -55,6 +55,9 @@ jobs:
     - get: golang-image
       passed: [build-image]
       trigger: true
+    - task: lint
+      image: golang-image
+      file: cli-code/lint.yml
     - task: go-build
       config:
         platform: linux
