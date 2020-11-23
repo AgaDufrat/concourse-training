@@ -7,7 +7,7 @@ resources:
 - name: dockerfile-repo
   type: git
   source:
-    uri: http://training-box-gogs/student/lab-assets
+    uri: ((dockerfile-git-uri))
     branch: master
 - name: golang-image
   type: docker-image
@@ -17,7 +17,7 @@ resources:
 - name: cli-code
   type: git
   source:
-    uri: http://training-box-gogs/student/yml2env
+    uri: ((yml2env-git-uri)
     branch: master
 - name: release-candidate
   type: s3
