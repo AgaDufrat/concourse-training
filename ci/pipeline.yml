@@ -11,9 +11,7 @@ resources:
     branch: master
 - name: golang-image
   type: docker-image
-  source:
-    repository: training-box-docker-registry:5000/student/golang-image
-    insecure_registries: [ "training-box-docker-registry:5000" ]
+  source: ((docker-registry-source))
 - name: cli-code
   type: git
   source:

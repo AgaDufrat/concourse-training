@@ -1,2 +1,5 @@
 dockerfile-git-uri: http://training-box-gogs/student/lab-assets
 yml2env-git-uri: http://training-box-gogs/student/yml2env
+docker-registry-source:
+  repository: training-box-docker-registry:5000/student/golang-image
+  insecure_registries: [ "training-box-docker-registry:5000" ]
