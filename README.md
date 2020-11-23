@@ -83,3 +83,13 @@ Use fly execute to make Concourse run your task in isolation. You will need to p
 ```
 fly execute -t training -c lint.yml -i cli-code=.
 ```
+
+## Secrets and Parameters
+
+Concourse can substitute placeholders in pipelines that are demarcated with double parentheses, eg ((password)).
+Integrated credentials-manager such as CredHub or Vault are recommended.
+When updating the pipeline we need to provide the correct argument to populate the parameters from vars.yml:
+
+```
+fly -t training set-pipeline --pipeline training --config ci/pipeline.yml --load-vars-from path/to/vars.yml
+```
