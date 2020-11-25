@@ -4,3 +4,8 @@ resources:
   source:
     uri: http://training-box-gogs/student/lab-assets
     branch: master
+- name: golang-image
+  type: docker-image
+  source:
+    repository: training-box-docker-registry:5000/student/golang-image
+    insecure_registries: [ "training-box-docker-registry:5000" ]
