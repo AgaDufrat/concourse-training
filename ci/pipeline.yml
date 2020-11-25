@@ -14,6 +14,15 @@ resources:
   source:
     uri: http://training-box-gogs/student/yml2env
     branch: master
+- name: release-candidate
+  type: s3
+  source:
+    endpoint: training-box-minio:9000
+    disable_ssl: true
+    bucket: release-candidates
+    regexp: yml2env-(.*)
+    access_key_id: ((access_key_id))
+    secret_access_key: ((secret_access_key))
 jobs:
   - name: build-image
     plan:
@@ -48,4 +57,11 @@ jobs:
             mv cli-code/* src/github.com/EngineerBetter/yml2env
             export GOPATH=$PWD
             cd src/github.com/EngineerBetter/yml2env
-            go build
+            go build -o $OLDPWD/built-binary/yml2env-$(date +%s)
+        # Mount an output directory called built-binary
+        output:
+          name: built-binary
+    # Upload any file matching built-binary/yml2env-* to S3
+    - put: release-candidate
+      params:
+        file: built-binary/yml2env-*
