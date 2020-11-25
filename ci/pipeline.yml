@@ -9,3 +9,10 @@ resources:
   source:
     repository: training-box-docker-registry:5000/student/golang-image
     insecure_registries: [ "training-box-docker-registry:5000" ]
+jobs:
+  - name: build-image
+    plan:
+    - get: dockerfile-repo
+    - put: golang-image
+      params: {build: dockerfile-repo}
+      get_params: {rootfs: true}
