@@ -21,3 +21,31 @@ jobs:
     - put: golang-image
       params: {build: dockerfile-repo}
       get_params: {rootfs: true}
+  - name: compile
+    plan:
+    - get: cli-code
+    - task: go-build
+      config:
+        platform: linux
+        # Define the Docker image to use as the filesystem for this task
+        image_resource:
+          type: docker-image
+          source:
+            repository: training-box-docker-registry:5000/student/golang-image
+            insecure_registries: [ "training-box-docker-registry:5000" ]
+
+        # Tell Concourse which things to mount into the container
+        inputs:
+        - name: cli-code
+
+        # Run a shell script to compile the code
+        run:
+          path: /bin/sh
+          args:
+          - -xc
+          - |
+            mkdir -p src/github.com/EngineerBetter/yml2env
+            mv cli-code/* src/github.com/EngineerBetter/yml2env
+            export GOPATH=$PWD
+            cd src/github.com/EngineerBetter/yml2env
+            go build
