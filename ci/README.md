@@ -40,3 +40,17 @@ params:
   FIXTURE_LOCATION: ""
 ```
 Remember to update the pipeline after every change.
+
+## TODO: Externalise Compile and Test
+Inline tasks are great for iterating on shell scripts, as we don’t need files to be available to Concourse - instead we can just fly set-pipeline and get faster feedback.
+
+What are the downsides of inline tasks? Can you imagine why inline tasks might be dangerous for regulated industries?
+
+Externalised tasks can be re-usable, and typically live in version control. Some Concourse users distribute libraries of common tasks that others can then compose pipelines from. Let’s tidy up our pipeline.yml by externalising our other tasks.
+
+Create an external equivalent of compile
+
+Execute the externalised compile task, and make fly download the compiled binary
+
+Externalise test, then change pipeline.yml to use the new external tasks
+>>>>>>> ddea214... TODO: Externalise Compile and Test
