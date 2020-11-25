@@ -65,3 +65,21 @@ jobs:
     - put: release-candidate
       params:
         file: built-binary/yml2env-*
+  - name: test
+    plan:
+    - get: cli-code
+    - task: test
+      config:
+        platform: linux
+        image_resource:
+          type: docker-image
+          source:
+            repository: training-box-docker-registry:5000/student/golang-image
+            insecure_registries: [ "training-box-docker-registry:5000" ]
+        inputs:
+        - name: cli-code
+          path: gopath/src/github.com/EngineerBetter/yml2env
+        run:
+          path: gopath/src/github.com/EngineerBetter/yml2env/test.sh
+        params:
+          FIXTURE_LOCATION: "fixtures/"

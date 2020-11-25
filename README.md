@@ -22,7 +22,7 @@ Most fly operations run against a particular Concourse instance, known as a *tar
 fly --target training login --concourse-url http://concourse.127.0.0.1.nip.io - concourse -p course
 ```
 
-- tell Concourse about your Pipeline and changes
+- tell Concourse about your Pipeline and updates the pipeline
 
 ```
 fly -t training set-pipeline --pipeline training --config ci/pipeline.yml
@@ -47,3 +47,24 @@ fly -t training unpause-job -j training/build-image
 ```
 fly -t training trigger-job -j training/build-image
 ```
+
+## Debugging
+
+Use `fly intercept` to establish a connection to the container that ran your job:
+```
+fly intercept -t training -j training/test
+```
+You can use:
+- `pwd`, `whoami` and `ls` to explore the container
+- `ctrl` + `d` to exit the container session
+- `cat gopath/src/github.com/EngineerBetter/yml2env/test.sh` to look at the script
+
+### Setting Task Environment Variables
+
+Documentation [parmas: env-vars](https://concourse-ci.org/tasks.html#schema.task.params), [env-vars schema](https://concourse-ci.org/config-basics.html#schema.env-vars)
+To set `$FIXTURE_LOCATION` to `fixtures/`
+```
+params:
+  FIXTURE_LOCATION: ""
+```
+Remember to update the pipeline after every change.
