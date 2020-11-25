@@ -1,0 +1,6 @@
+resources:
+- name: dockerfile-repo
+  type: git
+  source:
+    uri: http://training-box-gogs/student/lab-assets
+    branch: master
