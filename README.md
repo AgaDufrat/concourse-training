@@ -93,3 +93,25 @@ When updating the pipeline we need to provide the correct argument to populate t
 ```
 fly -t training set-pipeline --pipeline training --config ci/pipeline.yml --load-vars-from path/to/vars.yml
 ```
+
+## Access controls
+
+Make your pipeline publicly visible: `fly -t training expose-pipeline --pipeline training`
+
+Hide a pipline: `fly -t training hide-pipeline --pipeline training`
+
+Add a team to our Concourse.
+```
+fly -t training set-team --team-name=app-team --local-user=Aga
+```
+
+Use fly login to authenticate as a member of the app-team team, and give an alias to the target of training-app:
+```
+fly --target training-app login --concourse-url http://concourse.127.0.0.1.nip.io -u concourse -p course --team-name=app-team
+```
+
+To find out info such as what role the user authenticated on the training-app:
+
+```
+fly teams -t training-app -details
+```
