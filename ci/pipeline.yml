@@ -9,6 +9,11 @@ resources:
   source:
     repository: training-box-docker-registry:5000/student/golang-image
     insecure_registries: [ "training-box-docker-registry:5000" ]
+- name: cli-code
+  type: git
+  source:
+    uri: http://training-box-gogs/student/yml2env
+    branch: master
 jobs:
   - name: build-image
     plan:
